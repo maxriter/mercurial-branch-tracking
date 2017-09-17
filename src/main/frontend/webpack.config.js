@@ -3,7 +3,7 @@ const path = require('path');
 const OUTPUT_DIR = path.join(__dirname, '../../../target/classes/static');
 
 module.exports = {
-    entry: "./components/MainComponent",
+    entry: "./components/Main.tsx",
     output: {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
         path: OUTPUT_DIR,
         publicPath: '',
@@ -16,10 +16,14 @@ module.exports = {
         }, {
             test: /\.css$/,                                                                                                                             
             loader: 'style!css'
+        }, {
+            test: /\.tsx?$/,
+            loader: "ts-loader",
+            exclude: /node_modules/
         }]
     },
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx', '.tsx', '.ts']
     }
 };
                                                                                                                     
