@@ -15,6 +15,7 @@ public class Commit {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	// for test commit
 	public Commit() {
 	}
 
