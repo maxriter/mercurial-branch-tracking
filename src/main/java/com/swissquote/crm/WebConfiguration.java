@@ -8,13 +8,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebConfiguration {
 
-	@Bean
-	public WebMvcConfigurerAdapter forwardToIndexPage() {
-		return new WebMvcConfigurerAdapter() {
-			@Override
-			public void addViewControllers(ViewControllerRegistry registry) {
-				registry.addViewController("/").setViewName("forward:/index.html");
-			}
-		};
-	}
+    @Bean
+    public WebMvcConfigurerAdapter forwardToIndexPage() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addViewControllers(ViewControllerRegistry registry) {
+                registry.addViewController("/").setViewName("forward:/index.html");
+            }
+        };
+    }
 }

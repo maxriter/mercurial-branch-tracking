@@ -3,18 +3,18 @@ const path = require('path');
 const OUTPUT_DIR = path.join(__dirname, '../../../target/classes/static');
 
 module.exports = {
-    entry: "./components/Main.tsx",
-    output: {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+    entry: "./index.js",
+    output: {
         path: OUTPUT_DIR,
         publicPath: '',
-        filename: 'bundle.js'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+        filename: 'bundle.js'
     },
     module: {
         loaders: [{
             exclude: /node_modules/,
-            loader: 'babel'                                                                                                     
+            loader: 'babel'
         }, {
-            test: /\.css$/,                                                                                                                             
+            test: /\.css$/,
             loader: 'style!css'
         }, {
             test: /\.tsx?$/,

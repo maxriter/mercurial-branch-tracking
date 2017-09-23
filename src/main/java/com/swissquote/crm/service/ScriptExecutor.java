@@ -6,8 +6,8 @@ import java.util.Map;
 
 public interface ScriptExecutor {
 
-	List<String> getOpenedBranches(String projectName) throws IOException, InterruptedException;
+    List<String> getOpenedBranches(String projectName) throws IOException, InterruptedException;
 
-	Map<String, String> getCommitsOfOpenedBranches(String projectName) throws IOException, InterruptedException;
+    Map<String, String> getCommitsOfOpenedBranches(String projectName) throws IOException, InterruptedException;
 
 }
