@@ -4,6 +4,7 @@ import {Provider} from "react-redux";
 import App from "./containers/App";
 import "./css/style.css";
 import configureStore from "./store/configureStore";
+import "babel-es6-polyfill";
 
 const store = configureStore();
 

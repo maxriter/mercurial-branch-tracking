@@ -1,3 +1,4 @@
+// TODD currently isn't used, should be removed later
 export const PROJECTS = [{
     name: "sqc-account-overview",
     openedBranches: [

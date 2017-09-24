@@ -1,3 +1,1 @@
-/**
- * Created by max on 9/24/17.
- */
+export const LOAD_INITIAL_DATA = 'init-state';
