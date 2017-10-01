@@ -1,21 +1,22 @@
 import {dispatch} from "redux";
-import {DATA_LOADED, IS_LOADING_SET, ALERT_SHOW} from "../constants/Actions";
-import {SUCCESS, ERROR} from "../constants/AlertType";
+import {DATA_LOADED, LOADING_SET} from "../constants/Actions";
 import {LOAD_INITIAL_DATA} from "../constants/URL";
+import {NotificationContainer, NotificationManager} from "react-notifications";
+import {DEFAULT_NOTIFICATION_TIMEOUT} from "../constants/Timeout";
 
 export function loadData() {
     return function (dispatch) {
-        dispatch(setIsLoading(true));
+        dispatch(setLoading(true));
         return fetch(LOAD_INITIAL_DATA)
             .then(response => response.json())
             .then(data => {
                     if (data.projects) {
                         dispatch(receiveData(data.projects));
-                        dispatch(showAlert(SUCCESS, "Data was loaded successfully"));
+                        NotificationManager.success("Data was loaded successfully", "Success", DEFAULT_NOTIFICATION_TIMEOUT);
                     } else {
-                        dispatch(showAlert(ERROR, "Ooops... error during retrieving data from server"));
+                        NotificationManager.error("Ooops... error during retrieving data from server", "Error", DEFAULT_NOTIFICATION_TIMEOUT);
                     }
-                    dispatch(setIsLoading(false));
+                    dispatch(setLoading(false));
                 }
             )
     };
@@ -28,17 +29,10 @@ export function receiveData(data) {
     }
 }
 
-export function showAlert(type, message) {
+export function setLoading(loading) {
     return {
-        type: ALERT_SHOW,
-        payload: {type: type, message: message}
-    }
-}
-
-export function setIsLoading(isLoading) {
-    return {
-        type: IS_LOADING_SET,
-        payload: isLoading
+        type: LOADING_SET,
+        payload: loading
     }
 }
 

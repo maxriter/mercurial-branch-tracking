@@ -1,8 +1,8 @@
 import {combineReducers} from "redux";
-import commits from "./commits";
+import loading from "./loading";
 import projects from "./projects";
 
 export default combineReducers({
-    commits,
+    loading,
     projects
 })
