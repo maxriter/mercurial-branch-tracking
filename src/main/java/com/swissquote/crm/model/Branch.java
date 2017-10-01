@@ -8,6 +8,8 @@ public class Branch {
     private String name;
     private List<String> relatedProjects = new ArrayList<>();
     private String comment;
+    // TODO: add last date commit
+    // TODO: add count of commits
 
     public String getName() {
         return name;
