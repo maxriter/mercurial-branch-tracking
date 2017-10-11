@@ -12,7 +12,7 @@ class App extends Component {
 
     render() {
         const {loadData} = this.props.appActions;
-        const {filterData} = this.props.appActions;
+        const {filterProjects} = this.props.appActions;
         const {projects, loading, allProjects} = this.props;
         return <div className='row'>
             <NotificationContainer/>
@@ -20,7 +20,7 @@ class App extends Component {
                 projects={projects.projects}
                 allProjects={projects.allProjects}
                 loadData={loadData}
-                filterData={filterData}
+                filterProjects={filterProjects}
             />
             <Table projects={projects.projects} loadData={loadData}/>
             <Loader loading={loading.loading}/>

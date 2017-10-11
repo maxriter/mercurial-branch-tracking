@@ -6,7 +6,8 @@ import {DEFAULT_NOTIFICATION_TIMEOUT} from "../constants/Timeout";
 import {PROJECTS} from "../constants/Mock";
 
 export function loadData() {
-    return function (dispatch) { 
+    return function (dispatch) {
+        // todo uncomment when corrent data will be received from back-end
         // dispatch(setLoading(true));
         // return fetch(LOAD_INITIAL_DATA)
         //     .then(response => response.json())
@@ -25,20 +26,16 @@ export function loadData() {
     };
 }
 
-export function filterByProjectName(projectName, projects) {
+export function filterProjects(selectedProjects, projects) {
     return function (dispatch) {
         let filteredProjects = [];
         projects.forEach(project => {
-            if(project.name == projectName){
+            if(selectedProjects.indexOf(project.name) > -1){
                 filteredProjects.push(project);
             }
         });
-        dispatch(filterData(filteredProjects));
+        dispatch(receiveFilteredData(filteredProjects));
     }
-}
-
-export function filterByBranchName(branchName, projects) {
-
 }
 
 export function receiveData(data) {
@@ -55,7 +52,7 @@ export function setLoading(loading) {
     }
 }
 
-export function filterData(data) {
+export function receiveFilteredData(data) {
     return {
         type: DATA_FILTERED,
         payload: data

@@ -27,6 +27,12 @@ export default class Header extends Component {
         this.setState({
             selectedProjects: value
         });
+        this.props.filterProjects(this.getArrayOfSelectedValues(value), this.props.allProjects);
+    }
+    
+    getArrayOfSelectedValues(valuesAsString){
+        let values = valuesAsString.split(",");
+        return values;
     }
 
     render() {
@@ -51,5 +57,5 @@ Header.propTypes = {
     projects: PropTypes.array.isRequired,
     allProjects: PropTypes.array.isRequired,
     loadData: PropTypes.func.isRequired,
-    filterData: PropTypes.func.isRequired
+    filterProjects: PropTypes.func.isRequired
 };
