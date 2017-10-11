@@ -27,7 +27,8 @@ export default class Header extends Component {
         this.setState({
             selectedProjects: value
         });
-        this.props.filterProjects(this.getArrayOfSelectedValues(value), this.props.allProjects);
+        let projectsNames = value === "" ? [] : this.getArrayOfSelectedValues(value);
+        this.props.filterProjects(projectsNames, this.props.allProjects);
     }
     
     getArrayOfSelectedValues(valuesAsString){

@@ -27,14 +27,19 @@ export function loadData() {
 }
 
 export function filterProjects(selectedProjects, projects) {
+    // todo add filtering by branches after filtering by projects
     return function (dispatch) {
-        let filteredProjects = [];
-        projects.forEach(project => {
-            if(selectedProjects.indexOf(project.name) > -1){
-                filteredProjects.push(project);
-            }
-        });
-        dispatch(receiveFilteredData(filteredProjects));
+        if(selectedProjects.length == 0) {
+            dispatch(receiveFilteredData(projects));
+        } else {
+            let filteredProjects = [];
+            projects.forEach(project => {
+                if (selectedProjects.indexOf(project.name) > -1) {
+                    filteredProjects.push(project);
+                }
+            });
+            dispatch(receiveFilteredData(filteredProjects));
+        }
     }
 }
 
