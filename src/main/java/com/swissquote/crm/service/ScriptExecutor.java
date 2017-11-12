@@ -5,10 +5,10 @@ import java.util.Map;
 
 public interface ScriptExecutor {
 
-	List<String> getOpenedBranches(String projectName);
+    List<String> getOpenedBranches(String projectName);
 
-	Map<String, String> getCommitsOfOpenedBranches(String projectName);
+    Map<String, String> getCommitsOfOpenedBranches(String projectName);
 
-	List<String> getProjectNames();
+    List<String> getProjectNames();
 
 }

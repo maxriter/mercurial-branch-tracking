@@ -4,42 +4,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Projects {
-	private List<Project> projects = new ArrayList<>();
+    private List<Project> projects = new ArrayList<>();
 
-	public List<Project> getProjects() {
-		return projects;
-	}
+    public Projects(List<Project> projects) {
+        this.projects = projects;
+    }
 
-	public void setProjects(List<Project> projects) {
-		this.projects = projects;
-	}
+    public List<Project> getProjects() {
+        return projects;
+    }
 
-	public void addProject(Project project) {
-		projects.add(project);
-	}
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
+    public void addProject(Project project) {
+        projects.add(project);
+    }
 
-		Projects projects1 = (Projects) o;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
-		return projects != null ? projects.equals(projects1.projects) : projects1.projects == null;
-	}
+        Projects projects1 = (Projects) o;
 
-	@Override
-	public int hashCode() {
-		return projects != null ? projects.hashCode() : 0;
-	}
+        return projects != null ? projects.equals(projects1.projects) : projects1.projects == null;
+    }
 
-	@Override
-	public String toString() {
-		return "Projects{" +
-				"projects=" + projects +
-				'}';
-	}
+    @Override
+    public int hashCode() {
+        return projects != null ? projects.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Projects{" +
+                "projects=" + projects +
+                '}';
+    }
 }
 

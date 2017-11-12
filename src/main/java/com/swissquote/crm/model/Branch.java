@@ -2,14 +2,18 @@ package com.swissquote.crm.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Branch {
-
     private String name;
+    private List<Commit> commits = new ArrayList<>();
     private List<String> relatedProjects = new ArrayList<>();
     private String comment;
-    // TODO: add last date commit
-    // TODO: add count of commits
+
+    public Branch(String name, List<Commit> commits) {
+        this.name = name;
+        this.commits = commits;
+    }
 
     public String getName() {
         return name;
@@ -17,6 +21,14 @@ public class Branch {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Commit> getCommits() {
+        return commits;
+    }
+
+    public void setCommits(List<Commit> commits) {
+        this.commits = commits;
     }
 
     public List<String> getRelatedProjects() {
@@ -35,25 +47,29 @@ public class Branch {
         this.comment = comment;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || !(o instanceof Branch)) return false;
-
+        if (!(o instanceof Branch)) return false;
         Branch branch = (Branch) o;
-
-        if (name != null ? !name.equals(branch.name) : branch.name != null) return false;
-        if (relatedProjects != null ? !relatedProjects.equals(branch.relatedProjects) : branch.relatedProjects != null)
-            return false;
-        return comment != null ? comment.equals(branch.comment) : branch.comment == null;
+        return Objects.equals(name, branch.name) &&
+                Objects.equals(commits, branch.commits) &&
+                Objects.equals(relatedProjects, branch.relatedProjects) &&
+                Objects.equals(comment, branch.comment);
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (relatedProjects != null ? relatedProjects.hashCode() : 0);
-        result = 31 * result + (comment != null ? comment.hashCode() : 0);
-        return result;
+        return Objects.hash(name, commits, relatedProjects, comment);
+    }
+
+    @Override
+    public String toString() {
+        return "Branch{" +
+                "name='" + name + '\'' +
+                ", commits=" + commits +
+                ", relatedProjects=" + relatedProjects +
+                ", comment='" + comment + '\'' +
+                '}';
     }
 }

@@ -1,1 +1,1 @@
-export const LOAD_INITIAL_DATA = 'init-state';
+export const LOAD_INITIAL_DATA = 'projects';
