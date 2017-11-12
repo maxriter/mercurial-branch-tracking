@@ -6,14 +6,22 @@ import Table from "../components/Table";
 import "react-notifications/lib/notifications.css";
 import {NotificationContainer} from "react-notifications";
 import Loader from "../components/Loader";
+import Header from "../components/Header";
 
 class App extends Component {
 
     render() {
         const {loadData} = this.props.appActions;
-        const {projects, loading} = this.props;
+        const {filterProjects} = this.props.appActions;
+        const {projects, loading, allProjects} = this.props;
         return <div className='row'>
             <NotificationContainer/>
+            <Header
+                projects={projects.projects}
+                allProjects={projects.allProjects}
+                loadData={loadData}
+                filterProjects={filterProjects}
+            />
             <Table projects={projects.projects} loadData={loadData}/>
             <Loader loading={loading.loading}/>
         </div>;
@@ -23,7 +31,8 @@ class App extends Component {
 function mapStateToProps(state) {
     return {
         projects: state.projects,
-        loading: state.loading
+        loading: state.loading,
+        allProjects: state.allProjects
     }
 }
 
