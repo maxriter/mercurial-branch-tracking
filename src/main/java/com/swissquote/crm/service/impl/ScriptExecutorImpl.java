@@ -16,7 +16,7 @@ import java.util.*;
 public class ScriptExecutorImpl implements ScriptExecutor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScriptExecutorImpl.class);
-    private static final String GET_OPENED_BRANCHES_SCRIPT_PATH = "./src/main/resources/scripts/getListOfOpenedBranches.sh";
+    private static final String GET_OPENED_BRANCHES_SCRIPT_PATH = "./src/main/resources/scripts/getOpenedBranches.sh";
     private static final String GET_COMMITS_BY_OPEN_BRANCH = "./src/main/resources/scripts/getCommitsByOpenedBranch.sh";
     private static final String GET_PROJECT_NAMES = "./src/main/resources/scripts/getProjectNames.sh";
 

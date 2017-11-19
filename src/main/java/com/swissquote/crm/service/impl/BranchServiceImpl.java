@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,12 +41,25 @@ public class BranchServiceImpl implements BranchService {
         List<Project> projects = scriptExecutor.getProjectNames().stream()
                 .map(projectName -> new Project(projectName, getBranches(projectName)))
                 .collect(Collectors.toList());
-        defineRelatedProjects(projects);
+        Map<String, List<String>> relatedProjectsByBranches = getRelatedProjects(projects);
+        projects.forEach(project -> project.getBranches()
+                .forEach(branch -> branch.setRelatedProjects(relatedProjectsByBranches.get(branch.getName()))));
         return new Projects(projects);
     }
 
-    private void defineRelatedProjects(List<Project> projects) {
-        // TODO
+    private Map<String, List<String>> getRelatedProjects(List<Project> projects) {
+        Map<String, List<String>> relatedProjectsByBranches = new HashMap<>();
+        projects.forEach(project -> {
+            List<String> branches = project.getBranches().stream().map(Branch::getName).collect(Collectors.toList());
+            branches.forEach(branch -> {
+                if (relatedProjectsByBranches.containsKey(branch)) {
+                    relatedProjectsByBranches.get(branch).add(project.getName());
+                } else {
+                    relatedProjectsByBranches.put(branch, new ArrayList<>(Collections.singletonList(project.getName())));
+                }
+            });
+        });
+        return relatedProjectsByBranches;
     }
 
     private List<Commit> parseCommits(String response) {
