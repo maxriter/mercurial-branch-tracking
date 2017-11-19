@@ -1,104 +1,45 @@
 package com.swissquote.crm.service.impl;
 
-import com.swissquote.crm.enumeration.CommitProperties;
 import com.swissquote.crm.model.Branch;
-import com.swissquote.crm.model.Commit;
-import com.swissquote.crm.model.Project;
-import com.swissquote.crm.model.Projects;
 import com.swissquote.crm.service.BranchService;
-import com.swissquote.crm.service.ScriptExecutor;
+import com.swissquote.crm.service.CommitService;
+import com.swissquote.crm.service.ScriptExecutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+/**
+ * {@inheritDoc}
+ */
 @Service
 @Transactional
 public class BranchServiceImpl implements BranchService {
 
-    private static final String COLON = ":";
-    private static final String VERTICAL_BAR = "|";
+    @Autowired
+    private ScriptExecutorService scriptExecutorService;
 
     @Autowired
-    private ScriptExecutor scriptExecutor;
+    private CommitService commitService;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getListOfOpenedBranches(String projectName) {
-        return scriptExecutor.getOpenedBranches(projectName);
+        return scriptExecutorService.getOpenedBranches(projectName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public List<Branch> getBranches(String projectName) {
-        return scriptExecutor.getCommitsOfOpenedBranches(projectName).entrySet().stream()
-                .map(e -> new Branch(e.getKey(), parseCommits(e.getValue()))).collect(Collectors.toList());
-    }
-
-    @Override
-    public Projects getProjects() {
-        List<Project> projects = scriptExecutor.getProjectNames().stream()
-                .map(projectName -> new Project(projectName, getBranches(projectName)))
+    public List<Branch> getInfoByOpenedBranches(String projectName) {
+        return scriptExecutorService.getCommitsOfOpenedBranches(projectName).entrySet().stream()
+                .map(e -> new Branch(e.getKey(), commitService.parseCommits(e.getValue())))
                 .collect(Collectors.toList());
-        Map<String, List<String>> relatedProjectsByBranches = getRelatedProjects(projects);
-        projects.forEach(project -> project.getBranches()
-                .forEach(branch -> branch.setRelatedProjects(relatedProjectsByBranches.get(branch.getName()))));
-        return new Projects(projects);
     }
 
-    private Map<String, List<String>> getRelatedProjects(List<Project> projects) {
-        Map<String, List<String>> relatedProjectsByBranches = new HashMap<>();
-        projects.forEach(project -> {
-            List<String> branches = project.getBranches().stream().map(Branch::getName).collect(Collectors.toList());
-            branches.forEach(branch -> {
-                if (relatedProjectsByBranches.containsKey(branch)) {
-                    relatedProjectsByBranches.get(branch).add(project.getName());
-                } else {
-                    relatedProjectsByBranches.put(branch, new ArrayList<>(Collections.singletonList(project.getName())));
-                }
-            });
-        });
-        return relatedProjectsByBranches;
-    }
-
-    private List<Commit> parseCommits(String response) {
-        List<Commit> parsedCommits = new ArrayList<>();
-        Arrays.asList(response.split("(?=" + CommitProperties.CHANGESET + ")")).forEach(commitToConvert -> {
-            List<String> splittedCommit = splitCommitByAllAvailableProperties(commitToConvert);
-            List<String> filteredCommitProperties =
-                    filterCommitsByProperty(splittedCommit, Arrays.asList(CommitProperties.PARENT.toString(), CommitProperties.TAG.toString()));
-            Commit commit = getCommitByProperties(filteredCommitProperties);
-            parsedCommits.add(commit);
-        });
-        return parsedCommits;
-    }
-
-    private String getPropertyByName(List<String> commitProperties, String propertyName) {
-        return commitProperties.stream().filter(property -> property.contains(propertyName)).findFirst().orElse("")
-                .replace(propertyName + COLON, "").trim();
-    }
-
-    private List<String> filterCommitsByProperty(List<String> commits, List<String> propertiesToFilter) {
-        return commits.stream().filter(commit -> !doesCommitContainProperties(commit, propertiesToFilter)).collect(Collectors.toList());
-    }
-
-    private Commit getCommitByProperties(List<String> commitProperties) {
-        Commit commit = new Commit();
-        commit.setChangeset(getPropertyByName(commitProperties, CommitProperties.CHANGESET.toString()));
-        commit.setBranch(getPropertyByName(commitProperties, CommitProperties.BRANCH.toString()));
-        commit.setUser((getPropertyByName(commitProperties, CommitProperties.USER.toString())));
-        commit.setDate(getPropertyByName(commitProperties, CommitProperties.DATE.toString()));
-        commit.setSummary(getPropertyByName(commitProperties, CommitProperties.SUMMARY.toString()));
-        return commit;
-    }
-
-    private boolean doesCommitContainProperties(String commit, List<String> properties) {
-        return properties.stream().anyMatch(commit::contains);
-    }
-
-    private List<String> splitCommitByAllAvailableProperties(String commit) {
-        String regex = Stream.of(CommitProperties.values()).map(property -> "(?=" + property + ")").collect(Collectors.joining(VERTICAL_BAR));
-        return Arrays.asList(commit.split(regex));
-    }
 }

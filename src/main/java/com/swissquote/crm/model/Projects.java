@@ -1,10 +1,9 @@
 package com.swissquote.crm.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Projects {
-    private List<Project> projects = new ArrayList<>();
+    private List<Project> projects;
 
     public Projects(List<Project> projects) {
         this.projects = projects;
@@ -18,16 +17,11 @@ public class Projects {
         this.projects = projects;
     }
 
-    public void addProject(Project project) {
-        projects.add(project);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (!(o instanceof Projects)) return false;
 
         Projects projects1 = (Projects) o;
 

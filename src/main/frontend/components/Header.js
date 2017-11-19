@@ -1,5 +1,7 @@
-import React, {PropTypes, Component} from "react";
+import React, {Component, PropTypes} from "react";
 import Select from 'react-select';
+
+const COMMA = ",";
 
 export default class Header extends Component {
 
@@ -27,13 +29,8 @@ export default class Header extends Component {
         this.setState({
             selectedProjects: value
         });
-        let projectsNames = value === "" ? [] : this.getArrayOfSelectedValues(value);
+        let projectsNames = value === "" ? [] : value.split(COMMA);
         this.props.filterProjects(projectsNames, this.props.allProjects);
-    }
-    
-    getArrayOfSelectedValues(valuesAsString){
-        let values = valuesAsString.split(",");
-        return values;
     }
 
     render() {
@@ -47,9 +44,7 @@ export default class Header extends Component {
                 value={self.state.selectedProjects}
                 options={options}
                 simpleValue
-                placeholder="Select project"
-                backspaceRemoves={false}
-            />
+                placeholder="Select project"/>
         </div>);
     }
 }

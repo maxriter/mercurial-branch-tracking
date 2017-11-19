@@ -1,24 +1,23 @@
 package com.swissquote.crm.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Project {
     private String name;
-    private List<Branch> branches = new ArrayList<>();
+    private List<Branch> openedBranches;
 
-    public Project(String name, List<Branch> branches) {
+    public Project(String name, List<Branch> openedBranches) {
         this.name = name;
-        this.branches = branches;
+        this.openedBranches = openedBranches;
     }
 
-    public List<Branch> getBranches() {
-        return branches;
+    public List<Branch> getOpenedBranches() {
+        return openedBranches;
     }
 
-    public void setBranches(List<Branch> branches) {
-        this.branches = branches;
+    public void setOpenedBranches(List<Branch> openedBranches) {
+        this.openedBranches = openedBranches;
     }
 
     public String getName() {
@@ -35,11 +34,11 @@ public class Project {
         if (!(o instanceof Project)) return false;
         Project project = (Project) o;
         return Objects.equals(name, project.name) &&
-                Objects.equals(branches, project.branches);
+                Objects.equals(openedBranches, project.openedBranches);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, branches);
+        return Objects.hash(name, openedBranches);
     }
 }

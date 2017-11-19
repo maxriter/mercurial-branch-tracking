@@ -1,6 +1,6 @@
 package com.swissquote.crm.service.impl;
 
-import com.swissquote.crm.service.ScriptExecutor;
+import com.swissquote.crm.service.ScriptExecutorService;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -11,15 +11,25 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * {@inheritDoc}
+ */
 @Service
 @Transactional
-public class ScriptExecutorImpl implements ScriptExecutor {
+public class ScriptExecutorServiceImpl implements ScriptExecutorService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ScriptExecutorImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScriptExecutorServiceImpl.class);
     private static final String GET_OPENED_BRANCHES_SCRIPT_PATH = "./src/main/resources/scripts/getOpenedBranches.sh";
     private static final String GET_COMMITS_BY_OPEN_BRANCH = "./src/main/resources/scripts/getCommitsByOpenedBranch.sh";
     private static final String GET_PROJECT_NAMES = "./src/main/resources/scripts/getProjectNames.sh";
 
+    private static String getOutput(Process p) throws IOException {
+        return IOUtils.toString(p.getInputStream(), Charsets.UTF_8);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getOpenedBranches(String projectName) {
         try {
@@ -33,6 +43,9 @@ public class ScriptExecutorImpl implements ScriptExecutor {
         return Collections.emptyList();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getProjectNames() {
         ProcessBuilder processBuilder = new ProcessBuilder(GET_PROJECT_NAMES);
@@ -46,6 +59,9 @@ public class ScriptExecutorImpl implements ScriptExecutor {
         return Collections.emptyList();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Map<String, String> getCommitsOfOpenedBranches(String projectName) {
         List<String> openedBranches = getOpenedBranches(projectName);
@@ -69,9 +85,5 @@ public class ScriptExecutorImpl implements ScriptExecutor {
 
     private void excludeDefaultAndDevBranches(List<String> branches) {
         branches.removeIf(branch -> branch.equals("default") || branch.equals("dev"));
-    }
-
-    private static String getOutput(Process p) throws IOException {
-        return IOUtils.toString(p.getInputStream(), Charsets.UTF_8);
     }
 }

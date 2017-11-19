@@ -1,14 +1,29 @@
 package com.swissquote.crm.model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "branches")
 public class Branch {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(name = "name")
     private String name;
-    private List<Commit> commits = new ArrayList<>();
-    private List<String> relatedProjects = new ArrayList<>();
+
+    @Column(name = "comment")
     private String comment;
+
+    @Transient
+    private List<Commit> commits;
+
+    @Transient
+    private List<String> relatedProjects = new ArrayList<>();
 
     public Branch(String name, List<Commit> commits) {
         this.name = name;

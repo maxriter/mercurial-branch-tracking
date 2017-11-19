@@ -1,35 +1,31 @@
 import {dispatch} from "redux";
 import {DATA_LOADED, LOADING_SET, DATA_FILTERED} from "../constants/Actions";
 import {LOAD_INITIAL_DATA} from "../constants/URL";
-import {NotificationContainer, NotificationManager} from "react-notifications";
+import {NotificationManager} from "react-notifications";
 import {DEFAULT_NOTIFICATION_TIMEOUT} from "../constants/Timeout";
-import {PROJECTS} from "../constants/Mock";
 
 export function loadData() {
     return function (dispatch) {
-        // todo uncomment when corrent data will be received from back-end
-        // dispatch(setLoading(true));
-        // return fetch(LOAD_INITIAL_DATA)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //             if (data.projects) {
-        //                 dispatch(receiveData(data.projects));
-        //                 NotificationManager.success("Data was loaded successfully", "Success", DEFAULT_NOTIFICATION_TIMEOUT);
-        //             } else {
-        //                 NotificationManager.error("Ooops... error during retrieving data from server", "Error", DEFAULT_NOTIFICATION_TIMEOUT);
-        //             }
-        //             dispatch(setLoading(false));
-        //         }
-        //     )
-        dispatch(receiveData(PROJECTS));
-
+        dispatch(setLoading(true));
+        return fetch(LOAD_INITIAL_DATA)
+            .then(response => response.json())
+            .then(data => {
+                    if (data.projects) {
+                        dispatch(receiveData(data.projects));
+                        NotificationManager.success("Data was loaded successfully", "Success", DEFAULT_NOTIFICATION_TIMEOUT);
+                    } else {
+                        NotificationManager.error("Ooops... error during retrieving data from server", "Error", DEFAULT_NOTIFICATION_TIMEOUT);
+                    }
+                    dispatch(setLoading(false));
+                }
+            )
     };
 }
 
 export function filterProjects(selectedProjects, projects) {
     // todo add filtering by branches after filtering by projects
     return function (dispatch) {
-        if(selectedProjects.length == 0) {
+        if (selectedProjects.length == 0) {
             dispatch(receiveFilteredData(projects));
         } else {
             let filteredProjects = [];

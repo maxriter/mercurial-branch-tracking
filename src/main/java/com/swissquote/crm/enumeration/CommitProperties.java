@@ -2,7 +2,13 @@ package com.swissquote.crm.enumeration;
 
 public enum CommitProperties {
 
-    CHANGESET("changeset"), BRANCH("branch"), PARENT("parent"), TAG("tag"), USER("user"), DATE("date"), SUMMARY("summary");
+    CHANGESET("changeset"),
+    BRANCH("branch"),
+    PARENT("parent"),
+    TAG("tag"),
+    USER("user"),
+    DATE("date"),
+    SUMMARY("summary");
 
     private String property;
 

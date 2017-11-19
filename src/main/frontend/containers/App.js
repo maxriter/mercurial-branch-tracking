@@ -16,13 +16,12 @@ class App extends Component {
         const {projects, loading, allProjects} = this.props;
         return <div className='row'>
             <NotificationContainer/>
-            <Header
-                projects={projects.projects}
-                allProjects={projects.allProjects}
-                loadData={loadData}
-                filterProjects={filterProjects}
-            />
-            <Table projects={projects.projects} loadData={loadData}/>
+            <Header projects={projects.projects}
+                    allProjects={projects.allProjects}
+                    loadData={loadData}
+                    filterProjects={filterProjects}/>
+            <Table projects={projects.projects}
+                   loadData={loadData}/>
             <Loader loading={loading.loading}/>
         </div>;
     }
