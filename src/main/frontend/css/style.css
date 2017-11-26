@@ -20,3 +20,12 @@ td, th {
     text-align: left;
     padding: 8px;
 }
+
+.Commit {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.Branch {
+    cursor: pointer
+}

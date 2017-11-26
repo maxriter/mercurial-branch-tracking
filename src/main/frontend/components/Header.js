@@ -36,7 +36,7 @@ export default class Header extends Component {
     render() {
         let options = this.createProjectsOptions(this.props.allProjects);
         let self = this;
-        return (<div className="select_projects_section">
+        return <div className="select_projects_section">
             <Select
                 multi={true}
                 backspaceRemoves={false}
@@ -45,7 +45,7 @@ export default class Header extends Component {
                 options={options}
                 simpleValue
                 placeholder="Select project"/>
-        </div>);
+        </div>;
     }
 }
 

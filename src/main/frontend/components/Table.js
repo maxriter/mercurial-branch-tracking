@@ -1,4 +1,6 @@
 import React, {PropTypes, Component} from "react";
+import Commit from "./Commit";
+import Branch from "./Branch";
 
 const DASH = " - ";
 
@@ -9,14 +11,18 @@ export default class Table extends Component {
         this.props.loadData();
     }
 
-    getBranch(openedBranch) {
+    getBranch(openedBranch, projectName) {
         let relatedProjects = openedBranch.relatedProjects.length === 0 ? DASH : openedBranch.relatedProjects;
         let comment = openedBranch.comment ? openedBranch.comment : DASH;
-        return <td>
-            <ul>{"Name: " + openedBranch.name}</ul>
-            <ul>{"Comment: " + comment}</ul>
-            <ul>{"Related projects: " + relatedProjects}</ul>
-        </td>;
+        return <Branch projectName={projectName}
+                       name={openedBranch.name}
+                       comment={comment}
+                       relatedProjects={relatedProjects}
+                       clickOnBranch={this.props.clickOnBranch}/>
+    }
+
+    getShownCommits() {
+        return this.props.shownCommits.map(commit => <Commit commit={commit}/>);
     }
 
     renderAllProjectsInfo() {
@@ -25,16 +31,18 @@ export default class Table extends Component {
             project.openedBranches.forEach((branch, j) => {
                 let key = project.name + j;
                 let commitCell = i === 0 ?
-                    <td rowSpan={this.getRowSpanForCommitCell()} className="Commit">Commits here...</td> : null;
+                    <td rowSpan={this.getRowSpanForCommitCell()}>
+                        {this.getShownCommits()}
+                    </td> : null;
                 if (j === 0) {
                     rows.push(<tr key={key}>
                         <td rowSpan={project.openedBranches.length}>{project.name}</td>
-                        {this.getBranch(branch)}
+                        {this.getBranch(branch, project.name)}
                         {commitCell}
                     </tr>);
                 } else {
                     rows.push(<tr key={key}>
-                        {this.getBranch(branch)}
+                        {this.getBranch(branch, project.name)}
                     </tr>);
                 }
             });
@@ -68,5 +76,7 @@ export default class Table extends Component {
 
 Table.propTypes = {
     projects: PropTypes.array.isRequired,
-    loadData: PropTypes.func.isRequired
+    shownCommits: PropTypes.array.isRequired,
+    loadData: PropTypes.func.isRequired,
+    clickOnBranch: PropTypes.func.isRequired
 };

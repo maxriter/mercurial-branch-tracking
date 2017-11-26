@@ -1,5 +1,5 @@
 import {dispatch} from "redux";
-import {DATA_LOADED, LOADING_SET, DATA_FILTERED} from "../constants/Actions";
+import {DATA_LOADED, LOADING_SET, DATA_FILTERED, BRANCH_SELECTED} from "../constants/Actions";
 import {LOAD_INITIAL_DATA} from "../constants/URL";
 import {NotificationManager} from "react-notifications";
 import {DEFAULT_NOTIFICATION_TIMEOUT} from "../constants/Timeout";
@@ -20,6 +20,13 @@ export function loadData() {
                 }
             )
     };
+}
+
+export function clickOnBranch(data) {
+    return {
+        type: BRANCH_SELECTED,
+        payload: data
+    }
 }
 
 export function filterProjects(selectedProjects, projects) {

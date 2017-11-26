@@ -9,11 +9,10 @@ import Loader from "../components/Loader";
 import Header from "../components/Header";
 
 class App extends Component {
-
     render() {
-        const {loadData} = this.props.appActions;
+        const {loadData, clickOnBranch} = this.props.appActions;
         const {filterProjects} = this.props.appActions;
-        const {projects, loading, allProjects} = this.props;
+        const {projects, loading} = this.props;
         return <div className='row'>
             <NotificationContainer/>
             <Header projects={projects.projects}
@@ -21,7 +20,9 @@ class App extends Component {
                     loadData={loadData}
                     filterProjects={filterProjects}/>
             <Table projects={projects.projects}
-                   loadData={loadData}/>
+                   loadData={loadData}
+                   clickOnBranch={clickOnBranch}
+                   shownCommits={projects.shownCommits}/>
             <Loader loading={loading.loading}/>
         </div>;
     }
@@ -31,7 +32,8 @@ function mapStateToProps(state) {
     return {
         projects: state.projects,
         loading: state.loading,
-        allProjects: state.allProjects
+        allProjects: state.allProjects,
+        shownCommits: state.shownCommits
     }
 }
 
