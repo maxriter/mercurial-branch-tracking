@@ -31,9 +31,18 @@ export default class Branch extends Component {
     render() {
         return <td className={this.getClassName()}
                    onClick={this.handleBranchClick}>
-            <ul>{"Name: " + this.props.name}</ul>
-            <ul>{"Comment: " + this.props.comment}</ul>
-            <ul>{"Related projects: " + this.props.relatedProjects}</ul>
+            <ul>
+                <span className="Branch-property">Name: </span>
+                {this.props.name}
+            </ul>
+            <ul>
+                <span className="Branch-property">Comment: </span>
+                {this.props.comment}
+            </ul>
+            <ul>
+                <span className="Branch-property">Related projects: </span>
+                {this.props.relatedProjects.join(", ")}
+            </ul>
         </td>
     }
 }

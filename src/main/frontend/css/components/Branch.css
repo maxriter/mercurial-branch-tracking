@@ -1,0 +1,14 @@
+.Branch {
+    cursor: pointer;
+    min-height: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.Branch--selected {
+    background-color: #FCDECF;
+}
+
+.Branch-property {
+    font-weight: bold;
+}

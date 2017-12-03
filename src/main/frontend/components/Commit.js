@@ -9,11 +9,18 @@ export default class Commit extends Component {
 
     render() {
         return <div className="Commit">
-            <div>Changeset: {this.props.commit.changeset}</div>
-            <div>Branch: {this.props.commit.branch}</div>
-            <div>User: {this.props.commit.user}</div>
-            <div>Date: {DateFormatter.parse(this.props.commit.date)}</div>
-            <div>Message: {this.props.commit.summary}</div>
+            <ul>
+                <span className="Commit-property">User: </span>
+                {this.props.commit.user}
+            </ul>
+            <ul>
+                <span className="Commit-property">Date: </span>
+                {DateFormatter.parse(this.props.commit.date)}
+            </ul>
+            <ul>
+                <span className="Commit-property">Message: </span>
+                {this.props.commit.summary}
+            </ul>
         </div>;
     }
 }

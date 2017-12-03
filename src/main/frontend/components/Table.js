@@ -41,7 +41,9 @@ export default class Table extends Component {
                 }
                 if (j === 0) {
                     rows.push(<tr key={performance.now()}>
-                        <td rowSpan={project.openedBranches.length}>{project.name}</td>
+                        <td rowSpan={project.openedBranches.length}>
+                            <span className="Project-name">{project.name}</span>
+                        </td>
                         {this.getBranch(branch, project.name)}
                         {commitCell}
                     </tr>);

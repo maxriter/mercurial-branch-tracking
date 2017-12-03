@@ -1,59 +1,19 @@
-.table__projects {
-    width: 100%;
-    margin-top: 30px;
-    border-collapse: collapse;
-    border-left: 1px solid #F79361;
-    border-right: 1px solid #F79361;
-    border-bottom: 1px solid #F79361;
-    font-family: arial, sans-serif;
-}
-
-.table__projects tr:first-child th {
-    background: #F79361;
-    padding: 10px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .3);
-    color: black;
-    font-family: arial, sans-serif;
-    font-style: normal;
-    font-size: 22px;
-    text-align: center;
-    margin: 0;
-}
-
-.table__projects td, .table__projects th {
-    padding: 7px;
-    border: 1px solid #F79361;
-}
-
-.table__projects th {
-    text-align: center;
-    font-size: 18px;
-}
+@import './components/Branch.css';
+@import './components/Commit.css';
+@import './components/Loader.css';
+@import './components/ProjectSelect.css';
+@import './table.css';
 
 .mainContainer {
     color: #5461ff;
     text-align: center;
 }
 
-.Loader {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+ul {
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
-.Commit {
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
-
-.Branch {
-    cursor: pointer;
-}
-
-.Branch--selected {
-    background-color: #FCDECF;
-}
-
-.project__select {
-    width: 50%;
+.Project-name {
+    text-align: center;
 }
