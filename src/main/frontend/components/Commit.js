@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from "react";
+import * as DateFormatter from "../util/DateFormatter";
 
 export default class Commit extends Component {
 
@@ -11,7 +12,7 @@ export default class Commit extends Component {
             <div>Changeset: {this.props.commit.changeset}</div>
             <div>Branch: {this.props.commit.branch}</div>
             <div>User: {this.props.commit.user}</div>
-            <div>Date: {this.props.commit.date}</div>
+            <div>Date: {DateFormatter.parse(this.props.commit.date)}</div>
             <div>Message: {this.props.commit.summary}</div>
         </div>;
     }
