@@ -23,26 +23,30 @@ export default class Table extends Component {
     }
 
     getShownCommits() {
-        return this.props.shownCommits.map(commit => <Commit commit={commit}/>);
+        return this.props.shownCommits.map(
+            commit => <Commit key={new Date(commit.date).getTime()} commit={commit}/>
+        );
     }
 
     renderAllProjectsInfo() {
         let rows = [];
         this.props.projects.forEach((project, i) => {
             project.openedBranches.forEach((branch, j) => {
-                let key = project.name + j;
-                let commitCell = i === 0 ?
-                    <td rowSpan={this.getRowSpanForCommitCell()}>
+                let commitCell = null;
+                if (i === 0) {
+                    commitCell = <td key={performance.now()}
+                                     rowSpan={this.getRowSpanForCommitCell()}>
                         {this.getShownCommits()}
-                    </td> : null;
+                    </td>;
+                }
                 if (j === 0) {
-                    rows.push(<tr key={key}>
+                    rows.push(<tr key={performance.now()}>
                         <td rowSpan={project.openedBranches.length}>{project.name}</td>
                         {this.getBranch(branch, project.name)}
                         {commitCell}
                     </tr>);
                 } else {
-                    rows.push(<tr key={key}>
+                    rows.push(<tr key={performance.now()}>
                         {this.getBranch(branch, project.name)}
                     </tr>);
                 }
@@ -102,5 +106,5 @@ Table.propTypes = {
     /**
      * Currently selected branch. Object contains projectName and branchName
      */
-    selectedBranch: PropTypes.string.isRequired
+    selectedBranch: PropTypes.object.isRequired
 };
