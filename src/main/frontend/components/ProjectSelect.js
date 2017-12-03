@@ -3,7 +3,7 @@ import Select from 'react-select';
 
 const COMMA = ",";
 
-export default class Header extends Component {
+export default class ProjectSelect extends Component {
 
     constructor(props) {
         super(props);
@@ -36,7 +36,7 @@ export default class Header extends Component {
     render() {
         let options = this.createProjectsOptions(this.props.allProjects);
         let self = this;
-        return <div className="select_projects_section">
+        return <div className="project__select">
             <Select
                 multi={true}
                 backspaceRemoves={false}
@@ -49,7 +49,7 @@ export default class Header extends Component {
     }
 }
 
-Header.propTypes = {
+ProjectSelect.propTypes = {
     projects: PropTypes.array.isRequired,
     allProjects: PropTypes.array.isRequired,
     loadData: PropTypes.func.isRequired,

@@ -18,7 +18,8 @@ export default class Table extends Component {
                        name={openedBranch.name}
                        comment={comment}
                        relatedProjects={relatedProjects}
-                       clickOnBranch={this.props.clickOnBranch}/>
+                       clickOnBranch={this.props.clickOnBranch}
+                       selectedBranch={this.props.selectedBranch}/>
     }
 
     getShownCommits() {
@@ -59,7 +60,7 @@ export default class Table extends Component {
 
     render() {
         if (this.props.projects.length) {
-            return <table>
+            return <table className="table__projects">
                 <tbody>
                 <tr>
                     <th>Project</th>
@@ -75,8 +76,31 @@ export default class Table extends Component {
 }
 
 Table.propTypes = {
+    /**
+     * Represents all projects to be shown.
+     * Contains mercurial info for projects, branches and commits
+     */
     projects: PropTypes.array.isRequired,
+
+    /**
+     * Represents commits to be shown by select some branch.
+     * Will be displayed in "Commits" column
+     */
     shownCommits: PropTypes.array.isRequired,
+
+    /**
+     * Function to load mercurial info for projects from working directory
+     *
+     */
     loadData: PropTypes.func.isRequired,
-    clickOnBranch: PropTypes.func.isRequired
+
+    /**
+     * Callback function for click on some branch.
+     */
+    clickOnBranch: PropTypes.func.isRequired,
+
+    /**
+     * Currently selected branch. Object contains projectName and branchName
+     */
+    selectedBranch: PropTypes.string.isRequired
 };

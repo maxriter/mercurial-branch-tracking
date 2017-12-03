@@ -6,7 +6,7 @@ import Table from "../components/Table";
 import "react-notifications/lib/notifications.css";
 import {NotificationContainer} from "react-notifications";
 import Loader from "../components/Loader";
-import Header from "../components/Header";
+import ProjectSelect from "../components/ProjectSelect";
 
 class App extends Component {
     render() {
@@ -15,14 +15,15 @@ class App extends Component {
         const {projects, loading} = this.props;
         return <div className='row'>
             <NotificationContainer/>
-            <Header projects={projects.projects}
-                    allProjects={projects.allProjects}
-                    loadData={loadData}
-                    filterProjects={filterProjects}/>
+            <ProjectSelect projects={projects.projects}
+                           allProjects={projects.allProjects}
+                           loadData={loadData}
+                           filterProjects={filterProjects}/>
             <Table projects={projects.projects}
                    loadData={loadData}
                    clickOnBranch={clickOnBranch}
-                   shownCommits={projects.shownCommits}/>
+                   shownCommits={projects.shownCommits}
+                   selectedBranch={projects.selectedBranch}/>
             <Loader loading={loading.loading}/>
         </div>;
     }
